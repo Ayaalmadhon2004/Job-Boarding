@@ -1,0 +1,118 @@
+
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Poppins", sans-serif;
+  background-color: #f5f7fa;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--main-text);
+  font-weight: 700;
+}
+
+.subHeader {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  color: var(--dark-teal);
+  font-weight: 600;
+}
+
+.loading {
+  text-align: center;
+  color: var(--gray-text);
+  margin-top: 50px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 30px;
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.input,
+.textarea {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--gray);
+  font-size: 14px;
+  transition: 0.2s ease;
+}
+
+.input:focus,
+.textarea:focus {
+  border-color: var(--dark-teal);
+  outline: none;
+}
+
+.textarea {
+  min-height: 90px;
+}
+
+.button {
+  background: var(--dark-teal);
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: var(--light-teal);
+}
+
+.noJobs {
+  color: var(--gray-text);
+  text-align: center;
+}
+
+.jobList {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+}
+
+.jobCard {
+  background: #fff;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease;
+}
+
+.jobCard:hover {
+  transform: translateY(-3px);
+}
+
+.jobTitle {
+  margin: 0;
+  color: var(--main-text);
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.jobDesc {
+  color: #555;
+  font-size: 14px;
+  margin: 10px 0;
+  line-height: 1.4;
+}
+
+.date {
+  font-size: 12px;
+  color: var(--gray-text);
+}

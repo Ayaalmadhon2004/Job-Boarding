@@ -1,0 +1,39 @@
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.info p {
+  font-size: 1rem;
+  margin: 6px 0;
+  color: #444;
+}
+
+.info strong {
+  color: #000;
+}
+
+.notFound {
+  text-align: center;
+  color: red;
+  font-weight: bold;
+  margin-top: 50px;
+}

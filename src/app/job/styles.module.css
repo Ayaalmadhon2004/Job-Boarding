@@ -1,0 +1,102 @@
+
+body {
+  font-family: "Poppins", sans-serif;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 30px;
+}
+
+.title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--main-text);
+  margin-bottom: 30px;
+}
+
+/* فلترة البحث والفئات */
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.error {
+  text-align: center;
+  color: var(--error);
+  background: rgba(217, 83, 79, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.noJobs {
+  text-align: center;
+  color: var(--gray-text);
+  font-size: 1.1rem;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.jobTitle {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+
+.jobDesc {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: var(--gray-text);
+  margin-top: 12px;
+  display: block;
+}
+
+.type {
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--accent);
+  margin-top: 5px;
+}
