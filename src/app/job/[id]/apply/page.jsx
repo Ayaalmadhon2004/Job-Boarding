@@ -32,29 +32,47 @@ export default function ApplyPage() {
     formData.append("message", message);
     formData.append("resume", resumeFile);
 
-    const res = await fetch(`/api/jobs/${jobId}/apply-with-resume`, {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const res = await fetch(`/api/jobs/${jobId}/apply-with-resume`, {
+        method: "POST",
+        body: formData,
+      });
 
-    const data = await res.json();
-
-    if (res.ok) {
-      setSuccess("Application submitted successfully!");
-      setMatchMessage(data.match ? "🎯 Your resume matches this job!" : "⚠️ Your resume doesn't match perfectly.");
-      setError("");
-
-      if (data.match) {
-        alert("🎉 Congratulations! Your resume matches the job requirements.");
+      let data;
+      try {
+        data = await res.json();
+      } catch {
+        setError("Response is not valid JSON or is empty.");
+        setSuccess("");
+        setMatchMessage("");
+        return;
       }
 
-      setName("");
-      setEmail("");
-      setMessage("");
-      setResumeFile(null);
-      setTimeout(() => router.push("/"), 3000);
-    } else {
-      setError(data.error || "Something went wrong");
+      if (res.ok) {
+        setSuccess("Application submitted successfully!");
+        setMatchMessage(
+          data.match
+            ? "🎯 Your resume matches this job!"
+            : "⚠️ Your resume doesn't match perfectly."
+        );
+        setError("");
+
+        if (data.match) {
+          alert("🎉 Congratulations! Your resume matches the job requirements.");
+        }
+
+        setName("");
+        setEmail("");
+        setMessage("");
+        setResumeFile(null);
+        setTimeout(() => router.push("/"), 3000);
+      } else {
+        setError(data.error || "Something went wrong");
+        setSuccess("");
+        setMatchMessage("");
+      }
+    } catch {
+      setError("Failed to submit application. Please try again.");
       setSuccess("");
       setMatchMessage("");
     }
@@ -63,7 +81,11 @@ export default function ApplyPage() {
   return (
     <div className={styles.container}>
       <h1>Apply for this job</h1>
-      <form onSubmit={handleSubmit} className={styles.form} encType="multipart/form-data">
+      <form
+        onSubmit={handleSubmit}
+        className={styles.form}
+        encType="multipart/form-data"
+      >
         <input
           type="text"
           placeholder="Your name"
@@ -85,12 +107,16 @@ export default function ApplyPage() {
         ></textarea>
 
         <input
-          type="file"
-          accept=".pdf"
-          onChange={(e) => setResumeFile(e.target.files[0])}
-          required
+        type="file"
+        accept=".pdf"
+        onChange={(e) => {
+        const file = e.target.files[0];
+        console.log("Selected file:", file);
+        setResumeFile(file);
+        }}
+        required
         />
-
+        
         <button type="submit">Submit Application</button>
 
         {success && <p className={styles.success}>{success}</p>}
@@ -99,4 +125,5 @@ export default function ApplyPage() {
       </form>
     </div>
   );
+
 }
