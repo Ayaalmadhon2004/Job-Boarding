@@ -7,41 +7,63 @@ import styles from "./applyForm.module.css";
 export default function ApplyPage() {
   const router = useRouter();
   const params = useParams();
-  const jobId = params.id;  // هنا بفك الـ Promise بالـ useParams
+  const jobId = params.id;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [resumeFile, setResumeFile] = useState(null);
+
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const [matchMessage, setMatchMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = await fetch(`/api/jobs/${jobId}/apply`, {
+    if (!resumeFile) {
+      setError("Please upload your resume.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+    formData.append("message", message);
+    formData.append("resume", resumeFile);
+
+    const res = await fetch(`/api/jobs/${jobId}/apply-with-resume`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, message }),
+      body: formData,
     });
+
+    const data = await res.json();
 
     if (res.ok) {
       setSuccess("Application submitted successfully!");
+      setMatchMessage(data.match ? "🎯 Your resume matches this job!" : "⚠️ Your resume doesn't match perfectly.");
       setError("");
+
+      if (data.match) {
+        alert("🎉 Congratulations! Your resume matches the job requirements.");
+      }
+
       setName("");
       setEmail("");
       setMessage("");
-      setTimeout(() => router.push("/"), 2000);
+      setResumeFile(null);
+      setTimeout(() => router.push("/"), 3000);
     } else {
-      const data = await res.json();
       setError(data.error || "Something went wrong");
       setSuccess("");
+      setMatchMessage("");
     }
   };
 
   return (
     <div className={styles.container}>
       <h1>Apply for this job</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} encType="multipart/form-data">
         <input
           type="text"
           placeholder="Your name"
@@ -61,9 +83,19 @@ export default function ApplyPage() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
         ></textarea>
+
+        <input
+          type="file"
+          accept=".pdf"
+          onChange={(e) => setResumeFile(e.target.files[0])}
+          required
+        />
+
         <button type="submit">Submit Application</button>
+
         {success && <p className={styles.success}>{success}</p>}
         {error && <p className={styles.error}>{error}</p>}
+        {matchMessage && <p className={styles.match}>{matchMessage}</p>}
       </form>
     </div>
   );

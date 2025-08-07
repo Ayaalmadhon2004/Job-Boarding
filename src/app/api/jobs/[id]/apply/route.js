@@ -9,13 +9,11 @@ export async function POST(req, { params }) {
       return new Response(JSON.stringify({ error: "Name and email are required" }), { status: 400 });
     }
 
-    // تحقق من وجود الوظيفة أولاً
     const job = await prisma.job.findUnique({ where: { id: jobId } });
     if (!job) {
       return new Response(JSON.stringify({ error: "Job not found" }), { status: 404 });
     }
 
-    // إنشاء طلب التقديم مرتبط بالوظيفة
     const application = await prisma.application.create({
       data: {
         name,

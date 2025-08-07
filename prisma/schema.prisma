@@ -1,5 +1,5 @@
-generator client{
-    provider="prisma-client-js"
+generator client {
+  provider = "prisma-client-js"
 }
 
 datasource db {
@@ -7,23 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
-  id       String   @id @default(cuid())
+  id       String  @id @default(cuid())
   name     String?
-  email    String   @unique
+  email    String  @unique
   password String
-  role     String   @default("user")
+  role     String  @default("user")
+
+  jobs Job[]
 }
 
 model Job {
-  id            String   @id @default(cuid())
+  id            String        @id @default(cuid())
   title         String
   description   String
-  timePublished DateTime @default(now())
-  type          String @default("Web-development")
+  timePublished DateTime      @default(now())
+  type          String        @default("Web-development")
   applications  Application[]
 
+  ownerId String?
+  owner   User?   @relation(fields: [ownerId], references: [id])
 }
 
 model Application {
