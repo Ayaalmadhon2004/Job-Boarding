@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import styles from "./jobDetails.module.css";
-import ApplyButton from "./ApplyButton/page"; 
+import ApplyButton from "../../UI/ApplyButton"; 
 
 export default async function JobDetailsPage({ params }) {
   const { id } = await params; // <-- Add await here
