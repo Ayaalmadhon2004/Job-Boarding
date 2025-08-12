@@ -3,8 +3,9 @@ import styles from "./jobDetails.module.css";
 import ApplyButton from "./ApplyButton/page"; 
 
 export default async function JobDetailsPage({ params }) {
+  const { id } = await params; // <-- Add await here
   const job = await prisma.job.findUnique({
-    where: { id: params.id },
+    where: { id },
   });
 
   if (!job) {

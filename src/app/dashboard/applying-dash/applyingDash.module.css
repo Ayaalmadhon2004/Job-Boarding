@@ -1,0 +1,58 @@
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  font-family: "Poppins", sans-serif;
+  color: #065084; /* اللون الرئيسي */
+}
+
+.title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 30px;
+  text-align: center;
+  color: var(--main-text);
+}
+
+.jobCard {
+  border: 1px solid #d9d8d8;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 25px;
+  background-color: #f8fafc;
+}
+
+.jobTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--dark-teal);
+}
+
+.noJobs,
+.noApplications {
+  color: var(--gray-text);
+  font-style: italic;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.applicationList {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 10px;
+}
+
+.applicationList li {
+  padding: 8px 0;
+  border-bottom: 1px solid #e1e1e1;
+  font-size: 1rem;
+  color: #333;
+}
+
+.applicationList li strong {
+  color: var(--dark-teal);
+}

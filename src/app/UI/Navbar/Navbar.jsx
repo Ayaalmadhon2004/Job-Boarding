@@ -21,13 +21,14 @@ export default function Navbar() {
           <Link href="/job">Jobs</Link>
         </li>
         <li>
-          <Link href="/about">About</Link>
+          <Link href="/UI/About">About</Link>
         </li>
         <li>
-          <Link href="/contact">Contact</Link>
+          <Link href="/UI/Contact">Contact</Link>
         </li>
       </ul>
       <div className={navbar.signInUp}>
+        <i className="fa-solid fa-cloud-arrow-down" onClick={()=>router.push("/job/Bookmark")}></i>
         <button onClick={() => router.push("/signIn")}>Sign In</button>
         <button onClick={() => router.push("/signup")}>Sign Up</button>
       </div>

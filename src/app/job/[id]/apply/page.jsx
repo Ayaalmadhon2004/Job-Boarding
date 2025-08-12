@@ -12,7 +12,7 @@ export default function ApplyPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
-  const [resumeFile, setResumeFile] = useState(null);
+  const [skills, setSkills] = useState("");
 
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
@@ -21,8 +21,8 @@ export default function ApplyPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!resumeFile) {
-      setError("Please upload your resume.");
+    if (!skills.trim()) {
+      setError("Please describe your skills.");
       return;
     }
 
@@ -30,7 +30,7 @@ export default function ApplyPage() {
     formData.append("name", name);
     formData.append("email", email);
     formData.append("message", message);
-    formData.append("resume", resumeFile);
+    formData.append("skills", skills);
 
     try {
       const res = await fetch(`/api/jobs/${jobId}/apply-with-resume`, {
@@ -52,19 +52,19 @@ export default function ApplyPage() {
         setSuccess("Application submitted successfully!");
         setMatchMessage(
           data.match
-            ? "🎯 Your resume matches this job!"
-            : "⚠️ Your resume doesn't match perfectly."
+            ? "🎯 Your skills match this job!"
+            : "⚠️ Your skills don't match perfectly."
         );
         setError("");
 
         if (data.match) {
-          alert("🎉 Congratulations! Your resume matches the job requirements.");
+          alert("🎉 Congratulations! Your skills match the job requirements.");
         }
 
         setName("");
         setEmail("");
         setMessage("");
-        setResumeFile(null);
+        setSkills("");
         setTimeout(() => router.push("/"), 3000);
       } else {
         setError(data.error || "Something went wrong");
@@ -80,18 +80,15 @@ export default function ApplyPage() {
 
   return (
     <div className={styles.container}>
-      <h1>Apply for this job</h1>
-      <form
-        onSubmit={handleSubmit}
-        className={styles.form}
-        encType="multipart/form-data"
-      >
+      <h1 className={styles.title}>Apply for this job</h1>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <input
           type="text"
           placeholder="Your name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
+          className={styles.input}
         />
         <input
           type="email"
@@ -99,25 +96,26 @@ export default function ApplyPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className={styles.input}
         />
         <textarea
           placeholder="Message or cover letter"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
+          className={styles.textarea}
         ></textarea>
 
-        <input
-        type="file"
-        accept=".pdf"
-        onChange={(e) => {
-        const file = e.target.files[0];
-        console.log("Selected file:", file);
-        setResumeFile(file);
-        }}
-        required
-        />
-        
-        <button type="submit">Submit Application</button>
+        <textarea
+          placeholder="Describe your skills"
+          value={skills}
+          onChange={(e) => setSkills(e.target.value)}
+          required
+          className={styles.textarea}
+        ></textarea>
+
+        <button type="submit" className={styles.submitButton}>
+          Submit Application
+        </button>
 
         {success && <p className={styles.success}>{success}</p>}
         {error && <p className={styles.error}>{error}</p>}
@@ -125,5 +123,4 @@ export default function ApplyPage() {
       </form>
     </div>
   );
-
 }

@@ -9,15 +9,15 @@ export default function JobsPage() {
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [catTerm, setCatTerm] = useState(""); 
+  const [bookedmark, setBookedmark] = useState([]); // قائمة الوظائف المحفوظة
 
-  const router=useRouter();
+  const router = useRouter();
 
-  // Fetch jobs from API
+  // جلب الوظائف من API
   const fetchJobs = async () => {
     try {
       const res = await fetch("/api/jobs");
       const data = await res.json();
-      console.log("API data:", data);
 
       if (res.ok && Array.isArray(data)) {
         setJobs(data);
@@ -51,12 +51,31 @@ export default function JobsPage() {
     catTerm ? job.type.toLowerCase().includes(catTerm.toLowerCase()) : true
   );
 
+  
+
+  const handleBookmark = (job) => {
+  const isBookmarked = bookedmark.some(item => item.id === job.id);
+  let updatedBookmarks;
+
+  if (isBookmarked) {
+    updatedBookmarks = bookedmark.filter(item => item.id !== job.id);
+    alert('The Job Deleted from Book Mark');
+  } else {
+    updatedBookmarks = [...bookedmark, job];
+    alert('The Job added as Booked Mark');
+  }
+
+  setBookedmark(updatedBookmarks);
+  localStorage.setItem('bookedmark', JSON.stringify(updatedBookmarks));
+};
+
+
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Available Jobs</h1>
 
       <div className={styles.filters}>
-        {/* البحث */}
         <input
           type="text"
           placeholder="Search for jobs..."
@@ -64,7 +83,6 @@ export default function JobsPage() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
-        {/* الفئات */}
         <select
           className={styles.select}
           onChange={(e) => setCatTerm(e.target.value)}
@@ -90,8 +108,16 @@ export default function JobsPage() {
         <div className={styles.grid}>
           {categoryFiltered.map((job) => (
             <div key={job.id} className={styles.card}>
-              <h2 className={styles.jobTitle}>{job.title}</h2>
-              <p className={styles.jobDesc}>{job.description}</p>
+              <div className={styles.bookmark}>
+                <h2 className={styles.jobTitle}>{job.title}</h2>
+                <i
+                  className={`fa-solid fa-bookmark ${
+                    bookedmark.some(item => item.id === job.id) ? styles.bookmarked : ""
+                  }`}
+                  onClick={() => handleBookmark(job)}
+                  style={{ cursor: "pointer" }}
+                ></i>
+              </div>
               <small className={styles.date}>
                 {new Date(job.createdAt).toLocaleDateString("en-US")}
               </small>

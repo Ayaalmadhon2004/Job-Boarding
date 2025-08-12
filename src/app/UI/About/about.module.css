@@ -1,0 +1,95 @@
+/* إعدادات عامة للجسم */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  color: var(--main-text);
+}
+
+/* أقسام المحتوى */
+.section {
+  padding: 60px 20px;
+  min-height: auto;
+  font-family: inherit;
+  color: inherit;
+}
+
+/* حاوية مركزية بعرض محدود ونص مركزي */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* أيقونات مميزة بحجم ولون */
+.icon {
+  color: var(--dark-teal);
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+/* عنوان رئيسي كبير وواضح */
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* نصوص مع التحكم بالفواصل والأسطر */
+.text {
+  font-size: 1.1rem;
+  color: var(--gray-text);
+  line-height: 1.6;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  white-space: pre-line; /* للحفاظ على فواصل الأسطر */
+}
+
+/* حاوية البطاقات بمرونة وتجاوب */
+.features {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 40px;
+}
+
+/* بطاقة ميزة بتصميم بسيط وظل ناعم */
+.featureCard {
+  background-color: #fff; /* بديل عن white لأفضل وضوح */
+  padding: 25px 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  flex: 1 1 250px;
+  max-width: 300px;
+  color: var(--main-text);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+
+/* تأثير رفع بسيط عند المرور بالفأرة */
+.featureCard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* أيقونة البطاقة بحجم ولون جذاب */
+.featureIcon {
+  font-size: 2.5rem;
+  color: var(--light-teal);
+  margin-bottom: 15px;
+}
+
+/* عنوان البطاقة */
+.featureTitle {
+  font-weight: 700;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+/* وصف البطاقة بنص واضح */
+.featureDesc {
+  font-size: 1rem;
+  color: var(--gray-text);
+  line-height: 1.5;
+}

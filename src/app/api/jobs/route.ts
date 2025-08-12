@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { title, description ,type } = await req.json(); // in react form there is POST with the url /api/jobs
+    const { title, description ,type } = await req.json(); 
 
     if (!title || !description || !type ) {
       return NextResponse.json(
@@ -45,9 +45,10 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-    const jobs = await prisma.job.findMany({
-      orderBy: { timePublished: "desc" },
-    });
+   const jobs = await prisma.job.findMany({
+  orderBy: { id: "desc" }, 
+   });
+
 
     return NextResponse.json(jobs, { status: 200 });
   } catch (error) {

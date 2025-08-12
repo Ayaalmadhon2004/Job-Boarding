@@ -8,34 +8,35 @@ datasource db {
 }
 
 model User {
-  id       String  @id @default(cuid())
-  name     String?
-  email    String  @unique
-  password String
-  role     String  @default("user")
-
-  jobs Job[] @relation("JobOwner")
+  id    String @id @default(cuid())
+  email String @unique
+  name  String?
+  jobs  Job[]  @relation("JobOwner")
 }
 
 model Job {
-  id            String        @id @default(cuid())
-  title         String
-  description   String
-  timePublished DateTime      @default(now())
-  type          String        @default("Web-development")
-  applications  Application[]
-
-  ownerId String?
-  owner   User?   @relation("JobOwner", fields: [ownerId], references: [id])
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  type        String    @default("Web-development")
+  ownerId     String?    // nullable مؤقتاً
+  owner       User?      @relation("JobOwner", fields: [ownerId], references: [id])
+  applications Application[]
 }
+
+
 
 model Application {
-  id             String   @id @default(cuid())
-  name           String
-  email          String
-  message        String?
-  jobId          String
-  job            Job      @relation(fields: [jobId], references: [id])
-  resumeFilename String?  
-  createdAt      DateTime @default(now())
+  id         String   @id @default(cuid())
+  name       String
+  email      String
+  message    String?
+  skills     String?    // اجعلها nullable مؤقتاً
+  jobId      String
+  job        Job      @relation(fields: [jobId], references: [id])
+  status     String?    // nullable مؤقتاً
+  createdAt  DateTime @default(now())
 }
+
+
+
