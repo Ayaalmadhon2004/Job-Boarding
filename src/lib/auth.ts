@@ -1,19 +1,18 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt"; // استخدم import + تثبيت @types/bcrypt
-import { NextAuthOptions } from "next-auth";
+import bcrypt from "bcrypt";
+import { NextAuthOptions, Session } from "next-auth";
 
-// تعريف أنواع صريحة لتجنب any
 type AuthUser = {
   id: string;
   role: string;
-  [key: string]: unknown; // أي خصائص إضافية
+  [key: string]: unknown; // خصائص إضافية
 };
 
 type Token = {
   id?: string;
   role?: string;
-  [key: string]: unknown; // أي خصائص إضافية
+  [key: string]: unknown; // خصائص إضافية
 };
 
 export const authOptions: NextAuthOptions = {
@@ -37,7 +36,7 @@ export const authOptions: NextAuthOptions = {
         if (!isPasswordValid) return null;
 
         const { password, ...userWithoutPassword } = user;
-        return userWithoutPassword as AuthUser; // تحديد النوع صريح
+        return userWithoutPassword as AuthUser;
       },
     }),
   ],
@@ -52,11 +51,10 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    async session({ session, token }: { session: any; token: Token }) {
-      if (token) {
-        session.user.id = token.id;
-        session.user.role = token.role;
+    async session({ session, token }: { session: Session; token: Token }) {
+      if (token && session.user) {
+        (session.user as AuthUser).id = token.id ?? "";
+        (session.user as AuthUser).role = token.role ?? "";
       }
       return session;
     },
