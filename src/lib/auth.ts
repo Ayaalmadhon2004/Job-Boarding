@@ -1,7 +1,20 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt"; // استخدم import + تثبيت @types/bcrypt
 import { NextAuthOptions } from "next-auth";
+
+// تعريف أنواع صريحة لتجنب any
+type AuthUser = {
+  id: string;
+  role: string;
+  [key: string]: unknown; // أي خصائص إضافية
+};
+
+type Token = {
+  id?: string;
+  role?: string;
+  [key: string]: unknown; // أي خصائص إضافية
+};
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -24,7 +37,7 @@ export const authOptions: NextAuthOptions = {
         if (!isPasswordValid) return null;
 
         const { password, ...userWithoutPassword } = user;
-        return userWithoutPassword;
+        return userWithoutPassword as AuthUser; // تحديد النوع صريح
       },
     }),
   ],
@@ -32,16 +45,14 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }) {
-      // Attach id and role to the JWT token
+    async jwt({ token, user }: { token: Token; user?: AuthUser }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
       }
       return token;
     },
-    async session({ session, token }) {
-      // Include id and role in the session
+    async session({ session, token }: { session: any; token: Token }) {
       if (token) {
         session.user.id = token.id;
         session.user.role = token.role;
