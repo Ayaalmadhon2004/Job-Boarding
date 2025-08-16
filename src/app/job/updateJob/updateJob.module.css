@@ -1,0 +1,72 @@
+/* Form Container */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 25px 20px;
+  background-color: #f9fbfc;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Inputs, Textarea, Select */
+.input,
+.textarea,
+.select {
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+  width: 100%;
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  border-color: #0f828c;
+}
+
+/* Textarea */
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Submit Button */
+.button {
+  padding: 12px 20px;
+  background-color: #065084;
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #0f828c;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .form {
+    margin: 15px;
+    padding: 20px 15px;
+  }
+  .input, .textarea, .select, .button {
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .input, .textarea, .select, .button {
+    font-size: 0.9rem;
+  }
+}

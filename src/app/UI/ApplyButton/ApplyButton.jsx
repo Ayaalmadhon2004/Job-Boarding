@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "../jobDetails.module.css";
+import styles from "./applyButton.module.css";
 
 export default function ApplyButton({ jobId }) {
   const router = useRouter();

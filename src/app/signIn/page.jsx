@@ -24,10 +24,17 @@ export default function SignIn() {
     if (res?.ok) {
       const session = await fetch("/api/auth/session").then((res) => res.json());
 
+      if (session?.user) {
+        sessionStorage.setItem("name", session.user.name);
+        sessionStorage.setItem("email",session.user.email);
+        console.log(session.user.name);
+        console.log(session.user.email);
+      }
+
       if (session?.user?.role === "owner") {
         router.push("/dashboard");
       } else {
-        router.push("/job");
+        router.push("/UserPage"); 
       }
     } else {
       setErrorMsg("Login failed, please check your credentials.");

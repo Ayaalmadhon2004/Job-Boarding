@@ -1,33 +1,44 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./bookmark.module.css";
 
-export default function BookmarkedJobsPage() {
-  const [bookmarkedJobs, setBookmarkedJobs] = useState([]);
+export default function CartPage() {
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
-    const savedBookmarks = localStorage.getItem('bookedmark');
-    if (savedBookmarks) {
-      setBookmarkedJobs(JSON.parse(savedBookmarks));
-    }
+    const storedCart = JSON.parse(localStorage.getItem("cart")) || [];
+    setCartItems(storedCart);
   }, []);
 
-  if (bookmarkedJobs.length === 0) {
-    return <p>No bookmarked jobs found.</p>;
+  const removeItem = (id) => {
+    const updatedCart = cartItems.filter((item) => item.id !== id);
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    setCartItems(updatedCart);
+  };
+
+  if (cartItems.length === 0) {
+    return <p className={styles.empty}>Your cart is empty</p>;
   }
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Bookmarked Jobs</h1>
+      <h1 className={styles.title}>My Cart</h1>
       <div className={styles.grid}>
-        {bookmarkedJobs.map((job) => (
-          <div key={job.id} className={styles.card}>
+        {cartItems.map((job, index) => (
+          <div key={job.id ?? index} className={styles.card}>
             <h2 className={styles.jobTitle}>{job.title}</h2>
+            <p className={styles.type}>{job.type}</p>
             <small className={styles.date}>
               {new Date(job.createdAt).toLocaleDateString("en-US")}
             </small>
-            <p className={styles.type}>{job.type}</p>
+            <button
+             className={styles.buttonRemove}
+             onClick={() => removeItem(job.id)}
+            >
+            Remove
+            </button>
+
           </div>
         ))}
       </div>

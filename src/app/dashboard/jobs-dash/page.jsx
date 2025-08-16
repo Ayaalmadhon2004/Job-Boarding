@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
-import UpdateJob from "../../job/[id]/updateJob/UpdateJob";  // عدل المسار حسب مكان الملف
+import UpdateJob from "../../job/updateJob/UpdateJob"
 import styles from "./jobsDash.module.css";
 
 export default function JobsDashboard() {
@@ -64,10 +63,9 @@ export default function JobsDashboard() {
     setJobs((prevJobs) =>
       prevJobs.map((job) => (job.id === updatedJob.id ? updatedJob : job))
     );
-    setJobToUpdate(null); // إغلاق النموذج بعد التحديث
+    setJobToUpdate(null); 
   };
 
-  // لو هناك وظيفة للتحديث، اعرض النموذج فقط
   if (jobToUpdate) {
     return (
       <div className={styles.container}>
@@ -84,7 +82,7 @@ export default function JobsDashboard() {
     <div className={styles.container}>
       <h1 className={styles.header}>Jobs Dashboard</h1>
 
-      {session?.user?.role === "owner" && (
+      {session?.user?.role === "OWNER" && (
         <form onSubmit={handleAddJob} className={styles.form}>
           <input
             className={styles.input}

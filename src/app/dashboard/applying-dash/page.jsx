@@ -1,23 +1,31 @@
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/auth"; 
 import { redirect } from "next/navigation";
 import styles from "./applyingDash.module.css";
 
 export default async function ApplyingDashPage() {
   const session = await getServerSession(authOptions);
 
-  if (!session || session.user.role !== "owner") {
+  if (!session || session.user.role !== "OWNER") {
     redirect("/not-authorized");
   }
 
+  // العثور على المستخدم حسب البريد الإلكتروني
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+  });
+  console.log("Session User:", session.user);
+
+
+  if (!user) {
+    redirect("/not-authorized");
+  }
+
+  // جلب الوظائف الخاصة بالمستخدم
   const jobs = await prisma.job.findMany({
-    where: {
-      ownerId: session.user.id,
-    },
-    include: {
-      applications: true,
-    },
+    where: { ownerId: user.id },
+    include: { applications: true },
   });
 
   return (
@@ -34,7 +42,8 @@ export default async function ApplyingDashPage() {
             <ul className={styles.applicationList}>
               {job.applications.map((app) => (
                 <li key={app.id}>
-                  <strong>{app.name}</strong> ({app.email}) - {app.message}
+                  <strong>{app.name}</strong> ({app.email}) - {app.message || "No message"}
+                  {app.skills && <span> | Skills: {app.skills}</span>}
                 </li>
               ))}
             </ul>

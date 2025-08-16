@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styles from "./updateJob.module.css";
 
 export default function UpdateJob({ job, onUpdateSuccess }) {
   const [title, setTitle] = useState(job.title);
@@ -9,7 +10,7 @@ export default function UpdateJob({ job, onUpdateSuccess }) {
     e.preventDefault();
 
     const res = await fetch(`/api/jobs/${job.id}/apply-with-resume`, {
-      method: "PUT",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, description, type }),
     });
@@ -23,8 +24,9 @@ export default function UpdateJob({ job, onUpdateSuccess }) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <input
+        className={styles.input}
         type="text"
         placeholder="Job Title"
         value={title}
@@ -33,20 +35,27 @@ export default function UpdateJob({ job, onUpdateSuccess }) {
       />
 
       <textarea
+        className={styles.textarea}
         placeholder="Job Description"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         required
       />
 
-      <select value={type} onChange={(e) => setType(e.target.value)}>
+      <select
+        className={styles.select}
+        value={type}
+        onChange={(e) => setType(e.target.value)}
+      >
         <option value="web-development">Web development</option>
         <option value="mobile-development">Mobile development</option>
         <option value="ui-ux">UI/UX</option>
         <option value="desktop-development">Desktop development</option>
       </select>
 
-      <button type="submit">Update Job</button>
+      <button className={styles.button} type="submit">
+        Update Job
+      </button>
     </form>
   );
 }

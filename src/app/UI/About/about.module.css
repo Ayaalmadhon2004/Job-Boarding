@@ -1,89 +1,130 @@
-
-
-/* أقسام المحتوى */
+/* ==========================
+   Section & Container
+========================== */
 .section {
-  padding: 60px 20px;
-  min-height: auto;
-  font-family: inherit;
-  color: inherit;
+  padding: 80px 20px;
+  background-color: #f9fbfc;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* حاوية مركزية بعرض محدود ونص مركزي */
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   text-align: center;
 }
 
-/* أيقونات مميزة بحجم ولون */
+/* ==========================
+   Icon at Top
+========================== */
 .icon {
-  color: var(--dark-teal);
   font-size: 3rem;
-  margin-bottom: 20px;
-}
-
-/* عنوان رئيسي كبير وواضح */
-.title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-/* نصوص مع التحكم بالفواصل والأسطر */
-.text {
-  font-size: 1.1rem;
-  color: var(--gray-text);
-  line-height: 1.6;
-  max-width: 700px;
-  margin: 0 auto 30px;
-  white-space: pre-line; /* للحفاظ على فواصل الأسطر */
-}
-
-/* حاوية البطاقات بمرونة وتجاوب */
-.features {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-top: 40px;
-}
-
-/* بطاقة ميزة بتصميم بسيط وظل ناعم */
-.featureCard {
-  background-color: #fff; /* بديل عن white لأفضل وضوح */
-  padding: 25px 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
-  flex: 1 1 250px;
-  max-width: 300px;
-  color: var(--main-text);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: default;
-}
-
-/* تأثير رفع بسيط عند المرور بالفأرة */
-.featureCard:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
-}
-
-/* أيقونة البطاقة بحجم ولون جذاب */
-.featureIcon {
-  font-size: 2.5rem;
-  color: var(--light-teal);
+  color: #065084;
   margin-bottom: 15px;
 }
 
-/* عنوان البطاقة */
-.featureTitle {
+/* ==========================
+   Typography
+========================== */
+.title {
+  font-size: 2.5rem;
   font-weight: 700;
-  font-size: 1.3rem;
-  margin-bottom: 10px;
+  color: #065084;
+  margin-bottom: 25px;
 }
 
-/* وصف البطاقة بنص واضح */
+.text {
+  font-size: 1.1rem;
+  color: #555;
+  max-width: 800px;
+  margin: 0 auto 20px;
+  line-height: 1.6;
+}
+
+/* ==========================
+   Feature Cards
+========================== */
+.features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.featureCard {
+  background-color: #fff;
+  padding: 25px 15px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* ==========================
+   Feature Icons
+========================== */
+.featureIcon {
+  font-size: 2.5rem;
+  color: #065084;
+  margin-bottom: 15px;
+  transition: color 0.3s ease;
+}
+
+.featureCard:hover .featureIcon {
+  color: #ff7f50;
+}
+
+/* ==========================
+   Feature Text
+========================== */
+.featureTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #065084;
+  margin-bottom: 8px;
+}
+
 .featureDesc {
   font-size: 1rem;
-  color: var(--gray-text);
+  color: #555;
   line-height: 1.5;
+}
+
+/* ==========================
+   Responsive Media Queries
+========================== */
+@media screen and (max-width: 992px) {
+  .title {
+    font-size: 2rem;
+  }
+  .text {
+    font-size: 1rem;
+  }
+  .featureIcon {
+    font-size: 2rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .features {
+    grid-template-columns: 1fr;
+  }
+  .featureCard {
+    padding: 20px 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .title {
+    font-size: 1.6rem;
+  }
+  .text {
+    font-size: 0.9rem;
+  }
+  .featureIcon {
+    font-size: 1.8rem;
+  }
 }

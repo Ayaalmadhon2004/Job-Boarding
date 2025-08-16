@@ -1,19 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import styles from "./styles.module.css";
 import { useRouter } from "next/navigation";
+import styles from "./styles.module.css";
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState([]);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [catTerm, setCatTerm] = useState(""); 
-  const [bookedmark, setBookedmark] = useState([]); // قائمة الوظائف المحفوظة
 
   const router = useRouter();
 
-  // جلب الوظائف من API
+  // Fetch jobs from API
   const fetchJobs = async () => {
     try {
       const res = await fetch("/api/jobs");
@@ -40,41 +39,38 @@ export default function JobsPage() {
     fetchJobs();
   }, []);
 
-  // فلتر البحث
-  const filteredJob = jobs.filter((job) =>
-    job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    job.description.toLowerCase().includes(searchTerm.toLowerCase())
+  // Filter by search term
+  const filteredJob = jobs.filter(
+    (job) =>
+      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // فلتر التصنيف
+  // Filter by category
   const categoryFiltered = filteredJob.filter((job) =>
     catTerm ? job.type.toLowerCase().includes(catTerm.toLowerCase()) : true
   );
 
-  
+  // Handle bookmark / add to cart
+  const handleBookMark = (job) => {
+    const existingCart = JSON.parse(localStorage.getItem("cart")) || [];
 
-  const handleBookmark = (job) => {
-  const isBookmarked = bookedmark.some(item => item.id === job.id);
-  let updatedBookmarks;
+    const isAlreadyInCart = existingCart.some((item) => item.id === job.id);
+    if (isAlreadyInCart) {
+      alert("This job is already in your cart");
+      return;
+    }
 
-  if (isBookmarked) {
-    updatedBookmarks = bookedmark.filter(item => item.id !== job.id);
-    alert('The Job Deleted from Book Mark');
-  } else {
-    updatedBookmarks = [...bookedmark, job];
-    alert('The Job added as Booked Mark');
-  }
-
-  setBookedmark(updatedBookmarks);
-  localStorage.setItem('bookedmark', JSON.stringify(updatedBookmarks));
-};
-
-
+    const updatedCart = [...existingCart, job];
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
+    alert("Job added to cart");
+  };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Available Jobs</h1>
 
+      {/* Filters */}
       <div className={styles.filters}>
         <input
           type="text"
@@ -82,7 +78,6 @@ export default function JobsPage() {
           className={styles.search}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-
         <select
           className={styles.select}
           onChange={(e) => setCatTerm(e.target.value)}
@@ -95,34 +90,34 @@ export default function JobsPage() {
         </select>
       </div>
 
-      {/* عرض الأخطاء */}
+      {/* Error or no jobs */}
       {error && <p className={styles.error}>Error: {error}</p>}
-
-      {/* إذا لا توجد نتائج */}
       {!error && categoryFiltered.length === 0 && (
         <p className={styles.noJobs}>No jobs available at the moment</p>
       )}
 
-      {/* عرض الوظائف */}
+      {/* Jobs grid */}
       {!error && categoryFiltered.length > 0 && (
         <div className={styles.grid}>
-          {categoryFiltered.map((job) => (
-            <div key={job.id} className={styles.card}>
+          {categoryFiltered.map((job, index) => (
+            <div key={job.id ?? index} className={styles.card}>
               <div className={styles.bookmark}>
                 <h2 className={styles.jobTitle}>{job.title}</h2>
                 <i
-                  className={`fa-solid fa-bookmark ${
-                    bookedmark.some(item => item.id === job.id) ? styles.bookmarked : ""
-                  }`}
-                  onClick={() => handleBookmark(job)}
-                  style={{ cursor: "pointer" }}
+                  className="fa-solid fa-bookmark"
+                  onClick={() => handleBookMark(job)}
                 ></i>
               </div>
               <small className={styles.date}>
                 {new Date(job.createdAt).toLocaleDateString("en-US")}
               </small>
               <p className={styles.type}>{job.type}</p>
-              <button type="submit" onClick={() => router.push(`/job/${job.id}`)}>View more</button>
+              <button
+                type="button"
+                onClick={() => router.push(`/job/${job.id}`)}
+              >
+                View more
+              </button>
             </div>
           ))}
         </div>

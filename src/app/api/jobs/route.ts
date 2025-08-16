@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  if (token.role !== "owner") {
+  if (token.role !== "OWNER") {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
@@ -30,6 +30,7 @@ export async function POST(req: NextRequest) {
         title,
         description,
         type,
+        ownerId: token.id,
       },
     });
 

@@ -1,100 +1,119 @@
+/* ==========================
+   Container
+========================== */
 .container {
-  max-width: 700px;
-  margin: 40px auto 60px;
-  background-color: #f9fbff;
-  padding: 30px 40px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px 20px;
+  background-color: #f9fbfc;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  font-family: 'Poppins', sans-serif;
 }
 
+/* ==========================
+   Title
+========================== */
 .title {
   font-size: 2rem;
+  color: #065084;
   font-weight: 700;
-  margin-bottom: 25px;
-  color: #1a1a1a;
   text-align: center;
+  margin-bottom: 25px;
 }
 
+/* ==========================
+   Form
+========================== */
 .form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 15px;
 }
 
-.input {
-  padding: 12px 15px;
-  border: 1.8px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: border-color 0.25s ease;
-}
-
-.input:focus {
-  border-color: #0d47a1;
-  outline: none;
-  box-shadow: 0 0 5px rgba(13, 71, 161, 0.4);
-}
-
+/* Inputs and Textareas */
+.input,
 .textarea {
   padding: 12px 15px;
-  border: 1.8px solid #ccc;
   border-radius: 8px;
+  border: 1px solid #ccc;
   font-size: 1rem;
-  font-family: inherit;
-  resize: vertical;
-  min-height: 100px;
-  transition: border-color 0.25s ease;
-}
-
-.textarea:focus {
-  border-color: #0d47a1;
   outline: none;
-  box-shadow: 0 0 5px rgba(13, 71, 161, 0.4);
+  resize: vertical;
+  transition: border-color 0.3s ease;
 }
 
+.input:focus,
+.textarea:focus {
+  border-color: #0f828c;
+}
+
+/* Submit Button */
 .submitButton {
-  background-color: #0d47a1;
-  color: white;
-  font-weight: 600;
-  padding: 14px 0;
-  font-size: 1.1rem;
+  padding: 12px 20px;
+  background-color: #065084;
+  color: #fff;
+  font-weight: 500;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 10px rgba(13, 71, 161, 0.3);
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
 }
 
 .submitButton:hover {
-  background-color: #083974;
-  box-shadow: 0 6px 14px rgba(8, 57, 116, 0.5);
+  background-color: #0f828c;
 }
 
-.submitButton:focus {
-  outline: 2px solid #064080;
-  outline-offset: 2px;
-}
-
+/* ==========================
+   Messages
+========================== */
 .success {
-  color: #2e7d32;
-  font-weight: 600;
-  margin-top: 12px;
+  color: #28a745;
+  font-weight: 500;
+  margin-top: 10px;
   text-align: center;
 }
 
 .error {
-  color: #cc0000;
-  font-weight: 600;
-  margin-top: 12px;
+  color: #ff4d4f;
+  font-weight: 500;
+  margin-top: 10px;
   text-align: center;
 }
 
 .match {
-  margin-top: 12px;
-  font-weight: 600;
+  color: #ff7f50;
+  font-weight: 500;
+  margin-top: 10px;
   text-align: center;
-  color: #0d47a1;
+}
+
+/* ==========================
+   Responsive
+========================== */
+@media screen and (max-width: 768px) {
+  .container {
+    margin: 40px 20px;
+    padding: 25px 15px;
+  }
+  .title {
+    font-size: 1.6rem;
+  }
+  .input, .textarea, .submitButton {
+    font-size: 0.95rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    margin: 30px 15px;
+    padding: 20px 10px;
+  }
+  .title {
+    font-size: 1.4rem;
+  }
+  .input, .textarea, .submitButton {
+    font-size: 0.9rem;
+  }
 }

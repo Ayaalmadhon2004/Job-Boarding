@@ -7,36 +7,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  USER
+  ADMIN
+  OWNER
+}
+
 model User {
-  id    String @id @default(cuid())
-  email String @unique
-  name  String?
-  jobs  Job[]  @relation("JobOwner")
+  id         String   @id @default(uuid())
+  name       String?
+  email      String   @unique
+  password   String
+  role       Role     @default(USER)
+  aboutMe    String?
+  careerPath String?
+  jobsOwned  Job[]    @relation("JobOwner")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
 }
 
 model Job {
-  id          String    @id @default(cuid())
-  title       String
-  description String
-  type        String    @default("Web-development")
-  ownerId     String?    // nullable مؤقتاً
-  owner       User?      @relation("JobOwner", fields: [ownerId], references: [id])
+  id           String        @id @default(cuid())
+  title        String
+  description  String
+  type         String        @default("Web-development")
+  ownerId      String?
+  owner        User?         @relation("JobOwner", fields: [ownerId], references: [id])
   applications Application[]
 }
 
-
-
 model Application {
-  id         String   @id @default(cuid())
-  name       String
-  email      String
-  message    String?
-  skills     String?    // اجعلها nullable مؤقتاً
-  jobId      String
-  job        Job      @relation(fields: [jobId], references: [id])
-  status     String?    // nullable مؤقتاً
-  createdAt  DateTime @default(now())
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  message   String?
+  skills    String?
+  jobId     String
+  job       Job      @relation(fields: [jobId], references: [id])
+  status    String?
+  createdAt DateTime @default(now())
 }
-
-
-
