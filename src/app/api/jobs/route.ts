@@ -5,7 +5,8 @@ import { NextRequest, NextResponse } from "next/server";
 const secret = process.env.NEXTAUTH_SECRET;
 
 export async function POST(req: NextRequest) {
-  const token = (await getToken({ req, secret })) as { id: string; role: string };
+  // Type Assertion لتحديد نوع token
+  const token = (await getToken({ req, secret })) as { id: string; role: string } | null;
 
   if (!token) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -16,11 +17,11 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { title, description ,type } = await req.json(); 
+    const { title, description, type } = await req.json();
 
-    if (!title || !description || !type ) {
+    if (!title || !description || !type) {
       return NextResponse.json(
-        { error: "Title and description are required" },
+        { error: "Title, description and type are required" },
         { status: 400 }
       );
     }
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
         title,
         description,
         type,
-        ownerId: token.id,
+        ownerId: token.id, // النوع معروف الآن
       },
     });
 
@@ -46,10 +47,9 @@ export async function POST(req: NextRequest) {
 
 export async function GET() {
   try {
-   const jobs = await prisma.job.findMany({
-  orderBy: { id: "desc" }, 
-   });
-
+    const jobs = await prisma.job.findMany({
+      orderBy: { id: "desc" },
+    });
 
     return NextResponse.json(jobs, { status: 200 });
   } catch (error) {
