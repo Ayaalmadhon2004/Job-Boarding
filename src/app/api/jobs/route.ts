@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 const secret = process.env.NEXTAUTH_SECRET;
 
 export async function POST(req: NextRequest) {
-  // Type Assertion لتحديد نوع token
+  
   const token = (await getToken({ req, secret })) as { id: string; role: string } | null;
 
   if (!token) {
