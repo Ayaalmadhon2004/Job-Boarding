@@ -24,7 +24,9 @@ export async function POST(req: Request) {
 
     return new Response(JSON.stringify({ message: "تم إنشاء المستخدم", user }), { status: 201 });
 
-  } catch (error: any) {
+  } 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch (error: any) {
     if (error.code === "P2002") {
       return new Response(JSON.stringify({ error: "البريد الإلكتروني موجود مسبقًا" }), { status: 400 });
     }
