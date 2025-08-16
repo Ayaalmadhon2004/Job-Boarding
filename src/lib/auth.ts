@@ -1,19 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
-import { NextAuthOptions, Session } from "next-auth";
-
-type AuthUser = {
-  id: string;
-  role: string;
-  [key: string]: unknown; // خصائص إضافية
-};
-
-type Token = {
-  id?: string;
-  role?: string;
-  [key: string]: unknown; // خصائص إضافية
-};
+import { NextAuthOptions } from "next-auth";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -35,8 +23,12 @@ export const authOptions: NextAuthOptions = {
         const isPasswordValid = await bcrypt.compare(credentials.password, user.password);
         if (!isPasswordValid) return null;
 
-        const { password, ...userWithoutPassword } = user;
-        return userWithoutPassword as AuthUser;
+        return {
+          id: user.id,
+          role: user.role,
+          email: user.email,
+          name: user.name,
+        };
       },
     }),
   ],
@@ -44,17 +36,17 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({ token, user }: { token: Token; user?: AuthUser }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.role = user.role;
       }
       return token;
     },
-    async session({ session, token }: { session: Session; token: Token }) {
-      if (token && session.user) {
-        (session.user as AuthUser).id = token.id ?? "";
-        (session.user as AuthUser).role = token.role ?? "";
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id;
+        session.user.role = token.role;
       }
       return session;
     },
