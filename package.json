@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postinstall": "prisma generate"   // ✅ توليد Prisma Client بعد تثبيت الحزم
+    "postinstall": "prisma generate" 
   },
   "dependencies": {
     "@prisma/client": "^6.13.0",
