@@ -52,7 +52,7 @@ export default function UserEdit() {
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Edit Your Profile</h1>
-      <form onSubmit={handleSubmit} className={styles.form}>
+      <form onSubmit={handleSubmit} className={styles.form} aria-label="Edit Profile Form">
         <label className={styles.label}>About Me</label>
         <textarea
           className={styles.textarea}

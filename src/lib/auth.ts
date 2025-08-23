@@ -2,12 +2,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcrypt";
 import { NextAuthOptions } from "next-auth";
-
+// it is container to make sure that all auth code right 
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "credentials",
       credentials: {
+        // use more data to use it in tokens and sessions 
         email: { label: "Email", type: "email", placeholder: "email@gmail.com" },
         password: { label: "Password", type: "password" },
       },
@@ -51,6 +52,7 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
+  //when you try to access the protected route it will redirect you to this page 
   pages: {
     signIn: "/signIn",
   },

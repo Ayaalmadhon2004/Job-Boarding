@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { signIn as nextAuthSignIn } from "next-auth/react";
+import { signIn as nextAuthSignIn } from "next-auth/react"; //nextAuth for client side
 import styles from "./signIn.module.css";
 
 export default function SignIn() {
